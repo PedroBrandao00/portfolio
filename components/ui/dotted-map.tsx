@@ -2,6 +2,7 @@ import * as React from "react"
 import { createMap } from "svg-dotted-map"
 
 import { cn } from "@/lib/utils"
+import { useTheme } from "next-themes"
 
 interface Marker {
   lat: number
@@ -39,6 +40,9 @@ export function DottedMap({
 
   const processedMarkers = addMarkers(markers)
 
+  const { theme } = useTheme()
+  const currentDotColor = theme === "dark" ? "#e0e0e0" : "#1c1c1c"
+
   // Compute stagger helpers in a single, simple pass
   const { xStep, yToRowIndex } = React.useMemo(() => {
     const sorted = [...points].sort((a, b) => a.y - b.y || a.x - b.x)
@@ -67,7 +71,7 @@ export function DottedMap({
   return (
     <svg
       viewBox={`0 0 ${width} ${height}`}
-      className={cn("text-[#1c1c1c] dark:text-[#e0e0e0]", className)}
+      className={cn("text-gray-500 dark:text-gray-500", className)}
       style={{ width: "100%", height: "100%", ...style }}
     >
       {points.map((point, index) => {
@@ -78,7 +82,7 @@ export function DottedMap({
             cx={point.x + offsetX}
             cy={point.y}
             r={dotRadius}
-            fill="currentColor"
+            fill={currentDotColor}
             key={`${point.x}-${point.y}-${index}`}
           />
         )
