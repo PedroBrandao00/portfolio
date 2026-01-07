@@ -1,0 +1,21 @@
+{
+  "main": {
+    "hi": "Olá, o meu nome é",
+    "description": "Sou um desenvolvedor de front-end focado na criação de interfaces intuitivas e responsivas. Tenho experiência em React, JavaScript, TypeScript, HTML, CSS e Tailwind, desenvolvendo aplicações web modernas e eficientes, sempre a seguir as melhores práticas de desenvolvimento. Dou prioridade à acessibilidade, desempenho e experiência do utilizador, garantindo soluções funcionais e otimizadas. Para além disso, gosto de colaborar em equipas ágeis, aprender novas tecnologias e enfrentar desafios técnicos.",
+    "resume": "Currículo",
+    "experience": "Experiência",
+    "tech_stack": "Tecnologias",
+    "built_by": "Desenvolvido por",
+    "bo_01": "Desenvolvimento em React Native",
+    "bo_02": "Criação de interfaces responsivas e interativas",
+    "bo_03": "Integração com APIs",
+    "tf_01": "Desenvolvimento de aplicações web com Next.js e React",
+    "tf_02": "Interfaces responsivas com Tailwind CSS",
+    "tf_03": "Componentes reutilizáveis e gestão de estado com hooks",
+    "tf_04": "Integração com APIs via HTTP",
+    "tf_05": "Tipagem estática e código robusto com TypeScript",
+    "tf_06": "Optimização de performance com SSR e lazy loading",
+    "tf_07": "Lógica no servidor com Server Actions",
+    "present": "Presente"
+  }
+}

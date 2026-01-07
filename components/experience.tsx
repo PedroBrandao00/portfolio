@@ -1,92 +1,95 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { cn } from "@/lib/utils"
-
-const experiences = [
-    {
-        company: "TechCorp",
-        title: "Senior Frontend Engineer",
-        period: "2023 — Present",
-        description: [
-            "Deliver high-quality, robust production code for diverse clients including startups and enterprise companies",
-            "Work alongside creative directors to lead the research, development, and architecture of technical solutions",
-            "Collaborate with designers, project managers, and engineers to transform creative concepts into production realities",
-        ],
-        skills: ["React", "TypeScript", "Next.js", "GraphQL"],
-    },
-    {
-        company: "Digital Agency",
-        title: "Full Stack Developer",
-        period: "2021 — 2023",
-        description: [
-            "Developed and maintained code for in-house and client websites primarily using React, Node.js, and PostgreSQL",
-            "Manually tested sites in various browsers and mobile devices to ensure cross-browser compatibility",
-            "Interfaced with clients on a weekly basis, providing technological expertise",
-        ],
-        skills: ["React", "Node.js", "PostgreSQL", "AWS"],
-    },
-    {
-        company: "Startup Inc",
-        title: "Junior Developer",
-        period: "2019 — 2021",
-        description: [
-            "Collaborated with a team of developers building a SaaS platform",
-            "Developed and shipped highly interactive web applications",
-            "Worked closely with senior developers to learn best practices",
-        ],
-        skills: ["JavaScript", "Vue.js", "Python", "MongoDB"],
-    },
-]
+import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 export function ExperienceSection() {
-    const [activeTab, setActiveTab] = useState(0)
-
-    return (
-        <section id="experience" className="py-24">
-            <div className="flex items-center gap-4 mb-12">
-                <h2 className="text-2xl font-bold text-foreground">Experience</h2>
-                <div className="h-px flex-1 bg-border" />
-            </div>
-            <div className="flex flex-col gap-4 md:flex-row md:gap-8">
-                <div className="flex overflow-x-auto md:flex-col md:overflow-visible">
-                    {experiences.map((exp, index) => (
-                        <button
-                            key={exp.company}
-                            onClick={() => setActiveTab(index)}
-                            className={cn(
-                                "whitespace-nowrap border-b-2 px-4 py-3 text-left text-sm font-mono transition-colors md:border-b-0 md:border-l-2",
-                                activeTab === index
-                                    ? "border-primary bg-secondary/50 text-primary"
-                                    : "border-transparent text-muted-foreground hover:bg-secondary/30 hover:text-foreground",
-                            )}
-                        >
-                            {exp.company}
-                        </button>
-                    ))}
-                </div>
-                <div className="flex-1 pt-2">
-                    <h3 className="text-xl font-medium text-foreground">
-                        {experiences[activeTab].title} <span className="text-primary">@ {experiences[activeTab].company}</span>
-                    </h3>
-                    <p className="mt-1 font-mono text-sm text-muted-foreground">{experiences[activeTab].period}</p>
-                    <ul className="mt-6 space-y-4">
-                        {experiences[activeTab].description.map((item, i) => (
-                            <li key={i} className="flex gap-3 text-muted-foreground">
-                                <span className="mt-1.5 text-primary">▹</span>
-                                <span>{item}</span>
-                            </li>
-                        ))}
-                    </ul>
-                    <div className="mt-6 flex flex-wrap gap-2">
-                        {experiences[activeTab].skills.map((skill) => (
-                            <span key={skill} className="rounded-full bg-primary/10 px-3 py-1 text-xs font-mono text-primary">
-                                {skill}
-                            </span>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </section>
-    )
+  const [activeTab, setActiveTab] = useState(0);
+  const t = useTranslations("main");
+  const experiences = [
+    {
+      company: "Techfusion",
+      title: "Frontend Developer",
+      period: `2023 — ${t("present")}`,
+      description: [
+        t("tf_01"),
+        t("tf_02"),
+        t("tf_03"),
+        t("tf_04"),
+        t("tf_05"),
+        t("tf_06"),
+        t("tf_07"),
+      ],
+      skills: ["NEXTJS", "REACT", "TYPESCRIPT", "JAVASCRIPT", "TAILWINDCSS"],
+    },
+    {
+      company: "Brain One",
+      title: "Frontend Developer",
+      period: "2022 — 2022",
+      description: [t("bo_01"), t("bo_02"), t("bo_03")],
+      skills: ["REACT", "HTML", "JAVASCRIPT", "CSS"],
+    },
+  ];
+  return (
+    <section id="experience">
+      <div className="mb-12 flex items-center gap-4">
+        <h2 className="font-bold text-2xl text-foreground">
+          {t("experience")}
+        </h2>
+        <div className="h-px flex-1 bg-muted-foreground" />
+      </div>
+      <div className="flex flex-col gap-4 md:flex-row md:gap-8">
+        <div className="flex overflow-x-auto md:flex-col md:overflow-visible">
+          {experiences.map((exp, index) => (
+            <button
+              className={cn(
+                "whitespace-nowrap border-b-2 px-4 py-3 text-left font-mono text-sm transition-colors md:border-b-0 md:border-l-2",
+                activeTab === index
+                  ? "rounded-r-xl border-primary bg-primary/20 text-primary"
+                  : "rounded-r-xl border-transparent text-muted-foreground hover:bg-primary/30 hover:text-foreground"
+              )}
+              key={exp.company}
+              onClick={() => setActiveTab(index)}
+              type="button"
+            >
+              {exp.company}
+            </button>
+          ))}
+        </div>
+        <div className="flex-1 pt-2">
+          <h3 className="font-medium text-foreground text-xl">
+            {experiences[activeTab].title}{" "}
+            <span className="text-primary">
+              @ {experiences[activeTab].company}
+            </span>
+          </h3>
+          <p className="mt-1 font-mono text-muted-foreground text-sm">
+            {experiences[activeTab].period}
+          </p>
+          <ul className="mt-6 space-y-4">
+            {experiences[activeTab].description.map((item, _) => (
+              <li
+                className="flex items-center gap-3 text-muted-foreground"
+                key={item}
+              >
+                <span className="text-primary">▹</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-6 flex flex-wrap gap-2">
+            {experiences[activeTab].skills.map((skill) => (
+              <span
+                className="rounded-full bg-primary/10 px-3 py-1 font-mono text-primary text-xs"
+                key={skill}
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
