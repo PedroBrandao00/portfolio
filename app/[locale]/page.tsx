@@ -40,6 +40,7 @@ export default async function Home() {
                 className="rounded-md object-cover"
                 fill
                 src="/foto.jpg"
+                priority
               />
             </div>
           </div>
