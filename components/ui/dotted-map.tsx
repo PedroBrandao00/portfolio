@@ -41,10 +41,16 @@ export function DottedMap({
 
   const processedMarkers = addMarkers(markers)
 
-  const { theme } = useTheme()
-  const currentDotColor = theme === "dark" ? "#e0e0e0" : "#1c1c1c"
+  const { resolvedTheme } = useTheme()
+  const currentDotColor = resolvedTheme === "dark" ? "#e0e0e0" : "#1c1c1c" 
+  const [dotColor, setDotColor] = React.useState('') 
 
-  // Compute stagger helpers in a single, simple pass
+
+  React.useEffect(() => {
+    if (!resolvedTheme) return
+    setDotColor(resolvedTheme === "dark" ? "#e0e0e0" : "#1c1c1c")
+  }, [resolvedTheme])
+
   const { xStep, yToRowIndex } = React.useMemo(() => {
     const sorted = [...points].sort((a, b) => a.y - b.y || a.x - b.x)
     const rowMap = new Map<number, number>()
@@ -83,7 +89,7 @@ export function DottedMap({
             cx={point.x + offsetX}
             cy={point.y}
             r={dotRadius}
-            fill={currentDotColor}
+            fill={dotColor}
             key={`${point.x}-${point.y}-${index}`}
           />
         )
