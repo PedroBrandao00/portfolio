@@ -7,7 +7,7 @@ import ChangeLocale from "@/components/change-locale";
 import { ExperienceSection } from "@/components/experience";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 import { Button } from "@/components/ui/button";
-import { DottedMap } from "@/components/ui/dotted-map";
+import {DottedMap} from "@/components/ui/dotted-map";
 
 export default async function Home() {
   const t = await getTranslations("main");
@@ -101,7 +101,7 @@ export default async function Home() {
               {
                 lat: 40.6333,
                 lng: -8.65,
-                size: 1,
+                size: 3,
               },
             ]}
           />

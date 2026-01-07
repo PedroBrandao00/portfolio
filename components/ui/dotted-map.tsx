@@ -1,3 +1,4 @@
+'use client'
 import * as React from "react"
 import { createMap } from "svg-dotted-map"
 
@@ -27,7 +28,7 @@ export function DottedMap({
   mapSamples = 5000,
   markers = [],
   markerColor = "#FF6900",
-  dotRadius = 0.2,
+  dotRadius = 0.6,
   stagger = true,
   className,
   style,
