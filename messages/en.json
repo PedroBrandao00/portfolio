@@ -1,0 +1,21 @@
+{
+  "main": {
+    "hi": "Hi, my name is",
+    "description": "I’m a front-end developer focused on building intuitive and responsive interfaces. With experience in React, JavaScript, TypeScript, HTML, CSS, and Tailwind, I develop modern and efficient web applications while following best development practices. I prioritise accessibility, performance, and user experience, ensuring functional and optimised solutions. Additionally, I enjoy collaborating in agile teams, learning new technologies, and tackling technical challenges.",
+    "resume": "Resume",
+    "experience": "Experience",
+    "tech_stack": "Tech Stack",
+    "built_by": "Developed by",
+    "bo_01": "Development in React Native",
+    "bo_02": "Creation of responsive and interactive interfaces",
+    "bo_03": "Integration with APIs",
+    "tf_01": "Web application development with Next.js and React",
+    "tf_02": "Responsive interfaces with Tailwind CSS",
+    "tf_03": "Reusable components and state management with hooks",
+    "tf_04": "API integration via HTTP",
+    "tf_05": "Static typing and robust code with TypeScript",
+    "tf_06": "Performance optimization with SSR and lazy loading",
+    "tf_07": "Server-side logic with Server Actions",
+    "present": "Present"
+  }
+}
