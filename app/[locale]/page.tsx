@@ -6,8 +6,8 @@ import { TechStack } from "@/components/about-me";
 import ChangeLocale from "@/components/change-locale";
 import { ExperienceSection } from "@/components/experience";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
+import { Button } from "@/components/ui/button";
 import { DottedMap } from "@/components/ui/dotted-map";
-import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 
 export default async function Home() {
   const t = await getTranslations("main");
@@ -74,15 +74,11 @@ export default async function Home() {
       <div className="grid grid-cols-4 gap-8 lg:grid-cols-5 lg:gap-x-8">
         <div className="order-1 col-span-2 row-span-1 grid gap-8 lg:col-span-1">
           <div className="col-span-1 flex flex-col items-center justify-center rounded-xl bg-linear-to-t from-primary/20 via-primary/10 to-primary/5 p-6">
-            <HoverBorderGradient
-              as="button"
-              className="flex items-center space-x-2 bg-primary font-semibold text-white"
-              containerClassName="rounded-full"
-            >
+            <Button asChild className="rounded-full">
               <Link href="/cv_pedro.pdf" target="_blank">
                 {t("resume")}
               </Link>
-            </HoverBorderGradient>
+            </Button>
           </div>
           <div className="col-span-1 flex flex-col items-center justify-center rounded-xl bg-linear-to-t from-primary/20 via-primary/10 to-primary/5 p-6">
             <p className="font-bold text-7xl">2+</p>
