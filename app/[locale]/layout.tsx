@@ -4,13 +4,13 @@ import "../globals.css";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Particles } from "@/components/ui/particles";
 import { routing } from "@/i18n/routing";
 
 const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -34,15 +34,7 @@ export default async function RootLayout({
     <html className={poppins.className} lang={locale}>
       <body className={`${poppins.variable} h-full antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="relative h-full">
-            <NextIntlClientProvider>{children}</NextIntlClientProvider>
-            <Particles
-              className="absolute inset-0 z-0"
-              ease={80}
-              quantity={100}
-              refresh
-            />
-          </div>
+          <NextIntlClientProvider>{children}</NextIntlClientProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -7,7 +7,7 @@ import ChangeLocale from "@/components/change-locale";
 import { ExperienceSection } from "@/components/experience";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 import { Button } from "@/components/ui/button";
-import {DottedMap} from "@/components/ui/dotted-map";
+import { Particles, DottedMap } from "@/components/dynamic-components";
 
 export default async function Home() {
   const t = await getTranslations("main");
@@ -25,7 +25,15 @@ export default async function Home() {
     { icon: Mail, href: "mailto:pedrobrandao04@gmail.com", label: "Email" },
   ];
   return (
-    <div className="z-50 mx-auto flex max-w-5xl flex-col gap-16 p-6 py-20">
+    <div className="relative h-full">
+      {/* Particles moved to page - only loads on homepage */}
+      <Particles
+        className="absolute inset-0 z-0"
+        ease={80}
+        quantity={30}
+        refresh
+      />
+      <div className="z-50 mx-auto flex max-w-5xl flex-col gap-16 p-6 py-20">
       <div className="flex justify-center gap-4">
         <AnimatedThemeToggler />
         <ChangeLocale />
@@ -41,6 +49,8 @@ export default async function Home() {
                 fill
                 src="/foto.jpg"
                 priority
+                quality={85}
+                sizes="(max-width: 768px) 100vw, 320px"
               />
             </div>
           </div>
@@ -96,7 +106,7 @@ export default async function Home() {
         <div className="relative order-2 col-span-2 w-full overflow-hidden rounded-xl lg:order-3 lg:col-span-1">
           <div className="absolute inset-0 bg-linear-to-t from-primary/20 via-primary/10 to-primary/5" />
           <DottedMap
-            mapSamples={1000}
+            mapSamples={300}
             markers={[
               {
                 lat: 40.6333,
@@ -116,6 +126,7 @@ export default async function Home() {
           {t("built_by")} Pedro Brandão
         </p>
       </footer>
+    </div>
     </div>
   );
 }

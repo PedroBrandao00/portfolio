@@ -10,6 +10,18 @@ import {
 } from "react";
 import { cn } from "@/lib/utils";
 
+const isMobile = () => {
+  if (typeof window === "undefined") return false;
+  return window.innerWidth < 768 ||
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+};
+
+const shouldUseStaticParticles = () => {
+  if (typeof window === "undefined") return false;
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  return prefersReducedMotion || isMobile();
+};
+
 interface MousePosition {
   x: number;
   y: number;
@@ -22,6 +34,8 @@ function MousePosition(): MousePosition {
   });
 
   useEffect(() => {
+    if (isMobile()) return;
+
     const handleMouseMove = (event: MouseEvent) => {
       setMousePosition({ x: event.clientX, y: event.clientY });
     };
@@ -99,16 +113,23 @@ export const Particles: React.FC<ParticlesProps> = ({
   const dpr = typeof window !== "undefined" ? window.devicePixelRatio : 1;
   const rafID = useRef<number | null>(null);
   const resizeTimeout = useRef<NodeJS.Timeout | null>(null);
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
 
-  const color = theme === "dark" ? "#ffffff" : "#000000";
+  const useStatic = typeof window !== "undefined" && shouldUseStaticParticles();
+
+  const mobileQuantity = useStatic ? 10 : quantity;
+
+  const color = resolvedTheme === "light" ? "#000000" : "#ffffff";
 
   useEffect(() => {
     if (canvasRef.current) {
       context.current = canvasRef.current.getContext("2d");
     }
     initCanvas();
-    animate();
+
+    if (!useStatic) {
+      animate();
+    }
 
     const handleResize = () => {
       if (resizeTimeout.current) {
@@ -116,6 +137,12 @@ export const Particles: React.FC<ParticlesProps> = ({
       }
       resizeTimeout.current = setTimeout(() => {
         initCanvas();
+        if (!useStatic) {
+          if (rafID.current) {
+            window.cancelAnimationFrame(rafID.current);
+          }
+          animate();
+        }
       }, 200);
     };
 
@@ -130,7 +157,7 @@ export const Particles: React.FC<ParticlesProps> = ({
       }
       window.removeEventListener("resize", handleResize);
     };
-  }, [color]);
+  }, [color, useStatic]);
 
   useEffect(() => {
     onMouseMove();
@@ -170,9 +197,8 @@ export const Particles: React.FC<ParticlesProps> = ({
       canvasRef.current.style.height = `${canvasSize.current.h}px`;
       context.current.scale(dpr, dpr);
 
-      // Clear existing particles and create new ones with exact quantity
       circles.current = [];
-      for (let i = 0; i < quantity; i++) {
+      for (let i = 0; i < mobileQuantity; i++) {
         const circle = circleParams();
         drawCircle(circle);
       }
@@ -214,11 +240,13 @@ export const Particles: React.FC<ParticlesProps> = ({
       context.current.translate(translateX, translateY);
       context.current.beginPath();
       context.current.arc(x, y, size, 0, 2 * Math.PI);
-      context.current.fillStyle = `rgba(${rgb.join(", ")}, ${alpha})`;
+
+      const displayAlpha = useStatic ? circle.targetAlpha : alpha;
+      context.current.fillStyle = `rgba(${rgb.join(", ")}, ${displayAlpha})`;
       context.current.fill();
       context.current.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      if (!update) {
+      if (!update && !useStatic) {
         circles.current.push(circle);
       }
     }
@@ -237,7 +265,7 @@ export const Particles: React.FC<ParticlesProps> = ({
 
   const drawParticles = () => {
     clearContext();
-    const particleCount = quantity;
+    const particleCount = mobileQuantity;
     for (let i = 0; i < particleCount; i++) {
       const circle = circleParams();
       drawCircle(circle);
@@ -259,7 +287,6 @@ export const Particles: React.FC<ParticlesProps> = ({
   const animate = () => {
     clearContext();
     circles.current.forEach((circle: Circle, i: number) => {
-      // Handle the alpha value
       const edge = [
         circle.x + circle.translateX - circle.size, // distance from left edge
         canvasSize.current.w - circle.x - circle.translateX - circle.size, // distance from right edge
@@ -289,16 +316,13 @@ export const Particles: React.FC<ParticlesProps> = ({
 
       drawCircle(circle, true);
 
-      // circle gets out of the canvas
       if (
         circle.x < -circle.size ||
         circle.x > canvasSize.current.w + circle.size ||
         circle.y < -circle.size ||
         circle.y > canvasSize.current.h + circle.size
       ) {
-        // remove the circle from the array
         circles.current.splice(i, 1);
-        // create a new circle
         const newCircle = circleParams();
         drawCircle(newCircle);
       }
