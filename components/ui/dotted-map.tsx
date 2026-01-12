@@ -5,6 +5,12 @@ import { createMap } from "svg-dotted-map"
 import { cn } from "@/lib/utils"
 import { useTheme } from "next-themes"
 
+const isMobile = () => {
+  if (typeof window === "undefined") return false
+  return window.innerWidth < 768 ||
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+}
+
 interface Marker {
   lat: number
   lng: number
@@ -33,10 +39,12 @@ export function DottedMap({
   className,
   style,
 }: DottedMapProps) {
+  const mobileSamples = typeof window !== "undefined" && isMobile() ? 150 : mapSamples
+
   const { points, addMarkers } = createMap({
     width,
     height,
-    mapSamples,
+    mapSamples: mobileSamples,
   })
 
   const processedMarkers = addMarkers(markers)
